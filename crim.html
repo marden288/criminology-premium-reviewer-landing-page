@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criminology Premium Reviewer - Complete System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --neon-green: #00ff88;
+            --dark-bg: #0a0e27;
+            --darker-bg: #050810;
+            --text-primary: #f0f9ff;
+            --text-secondary: #94a3b8;
+            --border-color: rgba(0, 255, 136, 0.2);
+            --success-color: #10b981;
+            --error-color: #ef4444;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, var(--darker-bg) 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* MAIN APP CONTAINER */
+        .app-container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            min-height: 100vh;
+        }
+
+        /* SIDEBAR NAVIGATION */
+        .sidebar {
+            background: rgba(0, 0, 0, 0.3);
+            border-right: 1px solid var(--border-color);
+            padding: 2rem 1rem;
+            position: fixed;
+            width: 300px;
+            height: 100vh;
+            overflow-y: auto;
+            left: 0;
+            top: 0;
+        }
+
+        .sidebar-logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(120deg, var(--neon-green), #00ccff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 1rem;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem 1rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .sidebar-menu a:hover,
+        .sidebar-menu a.active {
+            background: rgba(0, 255, 136, 0.1);
+            color: var(--neon-green);
+            border-left: 3px solid var(--neon-green);
+            padding-left: calc(1rem - 3px);
+        }
+
+        /* MAIN CONTENT */
+        .main-content {
+            margin-left: 300px;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, var(--darker-bg) 100%);
+        }
+
+        /* PAGE SECTIONS */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* HEADER */
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(120deg, var(--neon-green), #00ccff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-header p {
+            color: var(--text-secondary);
+        }
+
+        /* GRID LAYOUT */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: rgba(0, 255, 136, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--neon-green);
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.2);
+        }
+
+        .stat-card {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--neon-green);
+            margin: 1rem 0;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* FORMS */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .form-input,
+        .form-textarea,
+        .form-select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: rgba(10, 14, 39, 0.8);
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: var(--neon-green);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* BUTTONS */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(120deg, var(--neon-green), #00ccff);
+            color: var(--dark-bg);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(0, 255, 136, 0.1);
+            color: var(--neon-green);
+            border: 1px solid var(--neon-green);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 255, 136, 0.2);
+        }
+
+        .btn-danger {
+            background: var(--error-color);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+        }
+
+        /* TABLES */
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(0, 255, 136, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th {
+            background: rgba(0, 255, 136, 0.05);
+            padding: 1rem;
+            text-align: left;
+            color: var(--neon-green);
+            font-weight: 700;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+
+        tr:hover {
+            background: rgba(0, 255, 136, 0.05);
+        }
+
+        /* FILE UPLOAD */
+        .file-upload {
+            border: 2px dashed var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .file-upload:hover {
+            border-color: var(--neon-green);
+            background: rgba(0, 255, 136, 0.05);
+        }
+
+        .file-upload input {
+            display: none;
+        }
+
+        .file-item {
+            background: rgba(0, 255, 136, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* MODALS */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, var(--dark-bg), var(--darker-bg));
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: var(--neon-green);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* TOAST MESSAGES */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: rgba(0, 255, 136, 0.1);
+            border: 2px solid var(--neon-green);
+            color: var(--neon-green);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            z-index: 2000;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .toast.error {
+            border-color: var(--error-color);
+            color: var(--error-color);
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(400px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .app-container {
+                grid-template-columns: 250px 1fr;
+            }
+
+            .sidebar {
+                width: 250px;
+            }
+
+            .main-content {
+                margin-left: 250px;
+                padding: 1.5rem;
+            }
+
+            .grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .app-container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+                max-width: 100%;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 1rem;
+            }
+
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar-menu a {
+                display: inline-block;
+                padding: 0.5rem 1rem;
+            }
+
+            .sidebar-menu li {
+                display: inline-block;
+                margin-right: 1rem;
+            }
+        }
+
+        /* LIVE PREVIEW */
+        .preview-container {
+            max-width: 600px;
+            margin: 2rem auto;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .preview-header {
+            background: rgba(0, 255, 136, 0.05);
+            padding: 1rem;
+            text-align: center;
+            font-weight: 700;
+            color: var(--neon-green);
+        }
+
+        .preview-content {
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .preview-price {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--neon-green);
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        /* CUSTOMER SITE STYLES */
+        .customer-site {
+            display: none;
+        }
+
+        .customer-site.active {
+            display: block;
+        }
+
+        .customer-hero {
+            background: linear-gradient(135deg, var(--dark-bg) 0%, var(--darker-bg) 100%);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .customer-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .customer-pricing {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .customer-price-box {
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            background: rgba(0, 255, 136, 0.02);
+        }
+
+        .customer-cta {
+            background: linear-gradient(120deg, var(--neon-green), #00ccff);
+            color: var(--dark-bg);
+            padding: 1.2rem 3rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 1.5rem;
+        }
+
+        .customer-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+        }
+
+        .toggle-view {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .toggle-btn {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-btn.active {
+            background: rgba(0, 255, 136, 0.3);
+            border-color: var(--neon-green);
+            color: var(--neon-green);
+        }
+    </style>
+</head>
+<body>
+    <!-- ADMIN DASHBOARD -->
+    <div class="admin-view">
+        <div class="app-container">
+            <!-- SIDEBAR -->
+            <aside class="sidebar">
+                <div class="sidebar-logo">🎓 CRIM-RX ADMIN</div>
+                <ul class="sidebar-menu">
+                    <li><a class="nav-link active" data-page="dashboard" onclick="showPage('dashboard')">📊 Dashboard</a></li>
+                    <li><a class="nav-link" data-page="manage-files" onclick="showPage('manage-files')">📁 Manage Files</a></li>
+                    <li><a class="nav-link" data-page="settings" onclick="showPage('settings')">⚙️ Settings</a></li>
+                    <li><a class="nav-link" data-page="purchases" onclick="showPage('purchases')">💳 Purchases</a></li>
+                    <li><a class="nav-link" data-page="preview" onclick="showPage('preview')">👁️ Preview Site</a></li>
+                    <li><a onclick="switchToCustomer()" style="cursor: pointer; color: var(--error-color);">👥 Customer View</a></li>
+                </ul>
+            </aside>
+
+            <!-- MAIN CONTENT -->
+            <main class="main-content">
+                <!-- DASHBOARD PAGE -->
+                <div class="page active" id="dashboard">
+                    <div class="page-header">
+                        <h1>Dashboard</h1>
+                        <p>Welcome to your Criminology Reviewer Admin Panel</p>
+                    </div>
+
+                    <div class="grid">
+                        <div class="card stat-card">
+                            <div class="stat-label">Total Sales</div>
+                            <div class="stat-value" id="totalSales">0</div>
+                        </div>
+                        <div class="card stat-card">
+                            <div class="stat-label">Total Revenue</div>
+                            <div class="stat-value" id="totalRevenue">₱0</div>
+                        </div>
+                        <div class="card stat-card">
+                            <div class="stat-label">Files Uploaded</div>
+                            <div class="stat-value" id="totalFiles">0</div>
+                        </div>
+                        <div class="card stat-card">
+                            <div class="stat-label">Avg Download</div>
+                            <div class="stat-value" id="avgDownload">100%</div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3 style="color: var(--neon-green); margin-bottom: 1rem;">Quick Actions</h3>
+                        <button class="btn btn-primary" onclick="showPage('manage-files')" style="margin-right: 1rem;">📤 Upload File</button>
+                        <button class="btn btn-secondary" onclick="showPage('preview')">👁️ Preview Site</button>
+                    </div>
+                </div>
+
+                <!-- MANAGE FILES PAGE -->
+                <div class="page" id="manage-files">
+                    <div class="page-header">
+                        <h1>Manage Files</h1>
+                        <p>Upload and manage your PDF and documents</p>
+                    </div>
+
+                    <div class="card">
+                        <h3 style="color: var(--neon-green); margin-bottom: 1rem;">Upload New File</h3>
+                        <div class="file-upload" onclick="document.getElementById('fileInput').click()">
+                            <p style="font-size: 1.5rem; margin-bottom: 0.5rem;">📄</p>
+                            <p style="color: var(--text-secondary);">Click to upload or drag and drop</p>
+                            <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.5rem;">PDF, DOCX, or any file (Max 50MB)</p>
+                            <input type="file" id="fileInput" onchange="handleFileUpload()">
+                        </div>
+                    </div>
+
+                    <div class="card" style="margin-top: 2rem;">
+                        <h3 style="color: var(--neon-green); margin-bottom: 1rem;">Uploaded Files</h3>
+                        <div id="filesList"></div>
+                    </div>
+                </div>
+
+                <!-- SETTINGS PAGE -->
+                <div class="page" id="settings">
+                    <div class="page-header">
+                        <h1>Settings</h1>
+                        <p>Configure your product details</p>
+                    </div>
+
+                    <div class="card">
+                        <h3 style="color: var(--neon-green); margin-bottom: 1.5rem;">Product Information</h3>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Product Title</label>
+                            <input type="text" class="form-input" id="productTitle" value="Criminology Premium Reviewer">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Product Description</label>
+                            <textarea class="form-textarea" id="productDesc">Complete Board Exam Preparation Package with 300-page PDF, practice questions, and comprehensive explanations.</textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Price (₱)</label>
+                            <input type="number" class="form-input" id="productPrice" value="297">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Original Price (₱)</label>
+                            <input type="number" class="form-input" id="originalPrice" value="1398">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Email Subject</label>
+                            <input type="text" class="form-input" id="emailSubject" value="Your Criminology Premium Reviewer - Download Link">
+                        </div>
+
+                        <button class="btn btn-primary" onclick="saveSettings()">💾 Save Settings</button>
+                    </div>
+                </div>
+
+                <!-- PURCHASES PAGE -->
+                <div class="page" id="purchases">
+                    <div class="page-header">
+                        <h1>Purchase History</h1>
+                        <p>View all customer purchases</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Email</th>
+                                        <th>Payment Method</th>
+                                        <th>Amount</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="purchasesTable">
+                                    <tr>
+                                        <td colspan="4" style="text-align: center; color: var(--text-secondary);">No purchases yet</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PREVIEW PAGE -->
+                <div class="page" id="preview">
+                    <div class="page-header">
+                        <h1>Preview Customer Site</h1>
+                        <p>See how your site looks to customers</p>
+                    </div>
+
+                    <div class="preview-container">
+                        <div class="preview-header">
+                            How Your Site Looks
+                        </div>
+                        <div class="preview-content">
+                            <h2 id="previewTitle">Criminology Premium Reviewer</h2>
+                            <p id="previewDesc" style="color: var(--text-secondary); margin-bottom: 1rem;">Complete Board Exam Preparation Package</p>
+                            
+                            <div style="display: flex; gap: 1rem; margin: 1rem 0; justify-content: center; flex-wrap: wrap;">
+                                <div style="border: 1px solid var(--border-color); padding: 1rem; border-radius: 8px;">
+                                    <div style="font-size: 0.85rem; color: var(--text-secondary);">Original</div>
+                                    <div style="font-size: 1.3rem; font-weight: 900; text-decoration: line-through; opacity: 0.6;">₱<span id="previewOrig">1398</span></div>
+                                </div>
+                                <div style="border: 2px solid var(--neon-green); padding: 1rem; border-radius: 8px;">
+                                    <div style="font-size: 0.85rem; color: var(--text-secondary);">Now</div>
+                                    <div style="font-size: 1.3rem; font-weight: 900; color: var(--neon-green);">₱<span id="previewPrice">297</span></div>
+                                </div>
+                            </div>
+
+                            <div style="background: rgba(0, 255, 136, 0.1); padding: 0.75rem; border-radius: 4px; margin-bottom: 1rem;">
+                                <strong style="color: var(--neon-green);">Save ₱<span id="previewSave">1101</span> (79%)</strong>
+                            </div>
+
+                            <button class="customer-cta" style="width: 100%;">💳 GET IT NOW - ₱<span id="previewCTA">297</span></button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- CUSTOMER VIEW -->
+    <div class="customer-view" id="customerView" style="display: none;">
+        <nav style="background: rgba(0, 0, 0, 0.3); border-bottom: 1px solid var(--border-color); padding: 1.5rem 3rem; display: flex; justify-content: space-between; align-items: center;">
+            <div style="font-size: 1.5rem; font-weight: 800; background: linear-gradient(120deg, var(--neon-green), #00ccff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">🎓 CRIM-RX</div>
+            <button class="btn btn-secondary btn-small" onclick="switchToAdmin()">🔧 Admin Panel</button>
+        </nav>
+
+        <section class="customer-hero">
+            <h1><span style="background: linear-gradient(120deg, var(--neon-green), #00ccff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">CRIMINOLOGY</span><br>PREMIUM REVIEWER</h1>
+            <p style="color: var(--text-secondary); font-size: 1.2rem; margin-bottom: 2rem;">Complete Board Exam Preparation Package</p>
+
+            <div class="customer-pricing">
+                <div class="customer-price-box">
+                    <div style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem;">Original Price</div>
+                    <div style="font-size: 2.5rem; font-weight: 900;">₱1,398</div>
+                </div>
+                <div style="font-size: 1.5rem; color: var(--neon-green); font-weight: 900;">→</div>
+                <div class="customer-price-box">
+                    <div style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem;">NOW ONLY</div>
+                    <div style="font-size: 2.5rem; font-weight: 900; color: var(--neon-green);">₱297</div>
+                    <div style="background: rgba(251, 191, 36, 0.1); color: #fbbf24; padding: 0.5rem; border-radius: 4px; margin-top: 0.5rem; font-weight: 700;">SAVE ₱1,101 (79%)</div>
+                </div>
+            </div>
+
+            <div style="background: linear-gradient(120deg, #ff3d3d, #ff7d3d); padding: 0.75rem 1.5rem; border-radius: 50px; font-weight: 700; display: inline-block; margin-top: 1rem;">⚡ LIMITED TIME OFFER</div>
+
+            <button class="customer-cta">💳 GET IT FOR ₱297</button>
+        </section>
+
+        <section style="max-width: 1100px; margin: 6rem auto; padding: 4rem 2rem;">
+            <h2 style="font-size: 2rem; text-align: center; margin-bottom: 2rem;">What You Get</h2>
+            <div class="grid">
+                <div class="card">
+                    <div style="font-size: 2rem; margin-bottom: 1rem;">📄</div>
+                    <h3 style="color: var(--neon-green); margin-bottom: 1rem;">300-Page PDF</h3>
+                    <p style="color: var(--text-secondary);">Comprehensive criminology review material covering all board exam topics with detailed explanations and case studies.</p>
+                </div>
+                <div class="card">
+                    <div style="font-size: 2rem; margin-bottom: 1rem;">⚡</div>
+                    <h3 style="color: var(--neon-green); margin-bottom: 1rem;">Instant Delivery</h3>
+                    <p style="color: var(--text-secondary);">Receive your complete PDF immediately after payment. Direct download link to your inbox.</p>
+                </div>
+                <div class="card">
+                    <div style="font-size: 2rem; margin-bottom: 1rem;">🎯</div>
+                    <h3 style="color: var(--neon-green); margin-bottom: 1rem;">100% Complete</h3>
+                    <p style="color: var(--text-secondary);">All topics covered with practice questions, answers, and comprehensive explanations.</p>
+                </div>
+                <div class="card">
+                    <div style="font-size: 2rem; margin-bottom: 1rem;">🔒</div>
+                    <h3 style="color: var(--neon-green); margin-bottom: 1rem;">Privacy Protected</h3>
+                    <p style="color: var(--text-secondary);">Your personal information is secure and will never be shared with third parties.</p>
+                </div>
+                <div class="card">
+                    <div style="font-size: 2rem; margin-bottom: 1rem;">📧</div>
+                    <h3 style="color: var(--neon-green); margin-bottom: 1rem;">Email Confirmation</h3>
+                    <p style="color: var(--text-secondary);">Get instant confirmation with your download link and receipt.</p>
+                </div>
+                <div class="card">
+                    <div style="font-size: 2rem; margin-bottom: 1rem;">💯</div>
+                    <h3 style="color: var(--neon-green); margin-bottom: 1rem;">Board Exam Ready</h3>
+                    <p style="color: var(--text-secondary);">Aligned with official board exam curriculum and format.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- MODALS -->
+    <div class="modal" id="purchaseModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closePurchaseModal()">✕</button>
+            <div class="modal-header">Complete Your Purchase</div>
+            
+            <div class="form-group">
+                <label class="form-label">Email Address</label>
+                <input type="email" class="form-input" id="purchaseEmail" placeholder="your@email.com">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Payment Method</label>
+                <select class="form-select" id="paymentMethod">
+                    <option value="">Select payment method</option>
+                    <option value="gcash">💳 GCash</option>
+                    <option value="paymaya">📱 PayMaya</option>
+                    <option value="card">💰 Credit/Debit Card</option>
+                    <option value="bancnet">🏦 BancNet</option>
+                    <option value="paymongo">🔐 PayMongo</option>
+                </select>
+            </div>
+
+            <div style="background: rgba(0, 255, 136, 0.05); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <span>Subtotal:</span>
+                    <span>₱297</span>
+                </div>
+                <div style="border-top: 1px solid var(--border-color); padding-top: 0.5rem; display: flex; justify-content: space-between; font-weight: 700;">
+                    <span>Total:</span>
+                    <span style="color: var(--neon-green); font-size: 1.2rem;">₱297</span>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" onclick="completePurchase()" style="width: 100%;">✓ Complete Purchase</button>
+        </div>
+    </div>
+
+    <script>
+        // DATA STORAGE
+        let files = JSON.parse(localStorage.getItem('files')) || [];
+        let purchases = JSON.parse(localStorage.getItem('purchases')) || [];
+        let settings = JSON.parse(localStorage.getItem('settings')) || {
+            productTitle: 'Criminology Premium Reviewer',
+            productDesc: 'Complete Board Exam Preparation Package',
+            productPrice: 297,
+            originalPrice: 1398,
+            emailSubject: 'Your Criminology Premium Reviewer - Download Link'
+        };
+
+        // PAGE NAVIGATION
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            document.querySelector(`[data-page="${pageId}"]`).classList.add('active');
+
+            if (pageId === 'manage-files') updateFilesList();
+            if (pageId === 'purchases') updatePurchasesTable();
+            if (pageId === 'preview') updatePreview();
+        }
+
+        // FILE UPLOAD
+        function handleFileUpload() {
+            const fileInput = document.getElementById('fileInput');
+            if (fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    files.push({
+                        id: Date.now(),
+                        name: file.name,
+                        size: (file.size / 1024 / 1024).toFixed(2),
+                        data: e.target.result,
+                        type: file.type
+                    });
+                    localStorage.setItem('files', JSON.stringify(files));
+                    updateFilesList();
+                    showToast('✓ File uploaded successfully!');
+                    fileInput.value = '';
+                    updateStats();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function updateFilesList() {
+            const list = document.getElementById('filesList');
+            if (files.length === 0) {
+                list.innerHTML = '<p style="color: var(--text-secondary);">No files uploaded yet</p>';
+                return;
+            }
+
+            list.innerHTML = files.map(file => `
+                <div class="file-item">
+                    <div>
+                        <strong>${file.name}</strong>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary);">${file.size} MB</p>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button class="btn btn-secondary btn-small" onclick="downloadFile(${file.id})">📥 Download</button>
+                        <button class="btn btn-danger btn-small" onclick="deleteFile(${file.id})">🗑️ Delete</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function deleteFile(id) {
+            if (confirm('Delete this file?')) {
+                files = files.filter(f => f.id !== id);
+                localStorage.setItem('files', JSON.stringify(files));
+                updateFilesList();
+                updateStats();
+                showToast('File deleted');
+            }
+        }
+
+        function downloadFile(id) {
+            const file = files.find(f => f.id === id);
+            if (file) {
+                const link = document.createElement('a');
+                link.href = file.data;
+                link.download = file.name;
+                link.click();
+            }
+        }
+
+        // SETTINGS
+        function saveSettings() {
+            settings = {
+                productTitle: document.getElementById('productTitle').value,
+                productDesc: document.getElementById('productDesc').value,
+                productPrice: parseInt(document.getElementById('productPrice').value),
+                originalPrice: parseInt(document.getElementById('originalPrice').value),
+                emailSubject: document.getElementById('emailSubject').value
+            };
+            localStorage.setItem('settings', JSON.stringify(settings));
+            updatePreview();
+            showToast('✓ Settings saved!');
+        }
+
+        // PURCHASES
+        function updatePurchasesTable() {
+            const table = document.getElementById('purchasesTable');
+            if (purchases.length === 0) {
+                table.innerHTML = '<tr><td colspan="4" style="text-align: center; color: var(--text-secondary);">No purchases yet</td></tr>';
+                return;
+            }
+
+            table.innerHTML = purchases.map(p => `
+                <tr>
+                    <td>${p.email}</td>
+                    <td>${p.method}</td>
+                    <td>₱${p.amount}</td>
+                    <td>${new Date(p.timestamp).toLocaleString()}</td>
+                </tr>
+            `).join('');
+        }
+
+        function completePurchase() {
+            const email = document.getElementById('purchaseEmail').value;
+            const method = document.getElementById('paymentMethod').value;
+
+            if (!email || !method) {
+                showToast('Please fill all fields', true);
+                return;
+            }
+
+            purchases.push({
+                email: email,
+                method: method,
+                amount: settings.productPrice,
+                timestamp: new Date().toISOString()
+            });
+            localStorage.setItem('purchases', JSON.stringify(purchases));
+            
+            showToast('✓ Purchase recorded! Download sent to ' + email);
+            document.getElementById('purchaseEmail').value = '';
+            document.getElementById('paymentMethod').value = '';
+            closePurchaseModal();
+            updateStats();
+        }
+
+        function closePurchaseModal() {
+            document.getElementById('purchaseModal').style.display = 'none';
+        }
+
+        // PREVIEW
+        function updatePreview() {
+            const discount = settings.originalPrice - settings.productPrice;
+            const percent = Math.round((discount / settings.originalPrice) * 100);
+
+            document.getElementById('previewTitle').textContent = settings.productTitle;
+            document.getElementById('previewDesc').textContent = settings.productDesc;
+            document.getElementById('previewOrig').textContent = settings.originalPrice;
+            document.getElementById('previewPrice').textContent = settings.productPrice;
+            document.getElementById('previewSave').textContent = discount;
+            document.getElementById('previewCTA').textContent = settings.productPrice;
+        }
+
+        // STATISTICS
+        function updateStats() {
+            document.getElementById('totalSales').textContent = purchases.length;
+            document.getElementById('totalRevenue').textContent = '₱' + (purchases.reduce((sum, p) => sum + p.amount, 0)).toLocaleString();
+            document.getElementById('totalFiles').textContent = files.length;
+            document.getElementById('avgDownload').textContent = purchases.length > 0 ? '100%' : '-';
+        }
+
+        // VIEW SWITCHING
+        function switchToCustomer() {
+            document.querySelector('.admin-view').style.display = 'none';
+            document.getElementById('customerView').style.display = 'block';
+            
+            // Setup customer CTA
+            document.querySelectorAll('.customer-cta').forEach(btn => {
+                btn.onclick = function() {
+                    if (files.length === 0) {
+                        showToast('No files available yet', true);
+                        return;
+                    }
+                    document.getElementById('purchaseModal').style.display = 'flex';
+                };
+            });
+        }
+
+        function switchToAdmin() {
+            document.querySelector('.admin-view').style.display = 'grid';
+            document.getElementById('customerView').style.display = 'none';
+        }
+
+        // TOAST
+        function showToast(msg, isError = false) {
+            const toast = document.createElement('div');
+            toast.className = `toast ${isError ? 'error' : ''}`;
+            toast.textContent = msg;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // INITIALIZATION
+        window.addEventListener('DOMContentLoaded', function() {
+            updateStats();
+            updateFilesList();
+            updatePurchasesTable();
+            updatePreview();
+
+            // Load settings
+            document.getElementById('productTitle').value = settings.productTitle;
+            document.getElementById('productDesc').value = settings.productDesc;
+            document.getElementById('productPrice').value = settings.productPrice;
+            document.getElementById('originalPrice').value = settings.originalPrice;
+            document.getElementById('emailSubject').value = settings.emailSubject;
+        });
+
+        // CLOSE MODALS ON ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closePurchaseModal();
+        });
+    </script>
+</body>
+</html>
